@@ -6,8 +6,15 @@ MVP Pipeline - 内容生产流水线
 
 import json
 import sys
+import os
 from pathlib import Path
 from typing import Dict, Any, Optional
+
+# Windows 控制台编码修复
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 
 class MVPPipeline:
@@ -21,19 +28,21 @@ class MVPPipeline:
     4. Formatter: 公众号排版
     """
 
-    def __init__(self, project_root: Optional[Path] = None):
+    def __init__(self, project_root: Optional[Path] = None, mock_mode: bool = False):
         """
         初始化流水线
 
         Args:
             project_root: 项目根目录
+            mock_mode: 强制使用模拟模式
         """
         if project_root is None:
-            # 默认为当前目录
-            project_root = Path(__file__).parent.parent
+            # 默认为 pipeline.py 所在的目录
+            project_root = Path(__file__).parent
 
         self.project_root = project_root
         self.skills_path = project_root / "skills"
+        self.mock_mode = mock_mode
 
         # 动态导入模块
         self._import_skills()
@@ -77,7 +86,7 @@ class MVPPipeline:
         Returns:
             采集结果
         """
-        if not self.skills_loaded:
+        if self.mock_mode or not self.skills_loaded:
             return self._mock_collect(url)
 
         collector = self.Collector()
@@ -118,7 +127,7 @@ class MVPPipeline:
         Returns:
             选题结果
         """
-        if not self.skills_loaded:
+        if self.mock_mode or not self.skills_loaded:
             return self._mock_curate(content_pool)
 
         from curator import ContentSource
@@ -179,7 +188,7 @@ class MVPPipeline:
         Returns:
             创作结果
         """
-        if not self.skills_loaded:
+        if self.mock_mode or not self.skills_loaded:
             return self._mock_write(topic)
 
         writer = self.Writer()
@@ -239,7 +248,7 @@ class MVPPipeline:
         Returns:
             排版结果
         """
-        if not self.skills_loaded:
+        if self.mock_mode or not self.skills_loaded:
             return self._mock_format(article)
 
         formatter = self.Formatter(theme=theme)
@@ -350,7 +359,7 @@ def main():
     args = parser.parse_args()
 
     # 创建流水线
-    pipeline = MVPPipeline()
+    pipeline = MVPPipeline(mock_mode=args.mock)
 
     # 运行
     url = args.url or "https://example.com/test"  # 默认值用于测试
