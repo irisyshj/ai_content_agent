@@ -1,0 +1,95 @@
+{
+  "name": "MVP Content Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "content-pipeline",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook 触发",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [240, 300],
+      "webhookId": "content-pipeline"
+    },
+    {
+      "parameters": {
+        "command": "cd /path/to/ai-media-system/skills/00-collector/geektime-collector && python collector.py --url \"{{ $json.url }}\" --output json"
+      },
+      "id": "collector",
+      "name": "采集器",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /path/to/ai-media-system/skills/01-creator/topic-curator && python curator.py"
+      },
+      "id": "topic-curator",
+      "name": "选题策划",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /path/to/ai-media-system/skills/02-writer/tech-explorer-writer && python writer.py"
+      },
+      "id": "writer",
+      "name": "内容创作",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /path/to/ai-media-system/skills/03-publisher/wechat-formatter && python formatter.py"
+      },
+      "id": "formatter",
+      "name": "公众号排版",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"html\": $json.html } }}"
+      },
+      "id": "respond",
+      "name": "返回结果",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1340, 300]
+    }
+  ],
+  "connections": {
+    "Webhook 触发": {
+      "main": [[{ "node": "采集器", "type": "main", "index": 0 }]]
+    },
+    "采集器": {
+      "main": [[{ "node": "选题策划", "type": "main", "index": 0 }]]
+    },
+    "选题策划": {
+      "main": [[{ "node": "内容创作", "type": "main", "index": 0 }]]
+    },
+    "内容创作": {
+      "main": [[{ "node": "公众号排版", "type": "main", "index": 0 }]]
+    },
+    "公众号排版": {
+      "main": [[{ "node": "返回结果", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-27T00:00:00.000Z",
+  "versionId": "1"
+}
