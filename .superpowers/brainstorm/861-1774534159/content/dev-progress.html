@@ -1,0 +1,216 @@
+<h2>🚀 Geektime Collector 开发进度</h2>
+<p class="subtitle">实时追踪 Sub-Project 1: 采集子系统 (MVP) 开发状态</p>
+
+<div class="section">
+  <h3>📊 项目概览</h3>
+  <div class="mockup">
+    <div class="mockup-header">项目: ai-media-system</div>
+    <div class="mockup-body" style="padding: 1rem;">
+      <div class="placeholder">
+        <strong>目标:</strong> 从极客时间采集文章内容，输出结构化 JSON<br>
+        <strong>技术栈:</strong> Python + BeautifulSoup + Requests + Pytest<br>
+        <strong>当前阶段:</strong> <span style="color:#4caf50">MVP 单线跑通</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>✅ 任务完成状态 (5/7)</h3>
+
+  <div class="cards">
+    <div class="card" style="border-color: #4caf50;">
+      <div class="card-body">
+        <h3 style="color:#4caf50;">✓ Task 0</h3>
+        <p><strong>Project Initialization</strong></p>
+        <ul style="margin:0; padding-left:1.2rem;">
+          <li>requirements.txt ✓</li>
+          <li>.env.example ✓</li>
+          <li>config/collector_config.yaml ✓</li>
+          <li>目录结构 ✓</li>
+        </ul>
+        <p class="label" style="margin-top:0.5rem;">Commit: 96edc42</p>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: #4caf50;">
+      <div class="card-body">
+        <h3 style="color:#4caf50;">✓ Task 1</h3>
+        <p><strong>Data Models</strong></p>
+        <ul style="margin:0; padding-left:1.2rem;">
+          <li>VideoInfo ✓</li>
+          <li>Article ✓</li>
+          <li>CollectionResult ✓</li>
+          <li>to_dict() 方法 ✓</li>
+          <li>7个测试全部通过 ✓</li>
+        </ul>
+        <p class="label" style="margin-top:0.5rem;">Commit: 3035c90</p>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: #4caf50;">
+      <div class="card-body">
+        <h3 style="color:#4caf50;">✓ Task 2</h3>
+        <p><strong>Authentication Handler</strong></p>
+        <ul style="margin:0; padding-left:1.2rem;">
+          <li>AuthHandler 类 ✓</li>
+          <li>环境变量读取 ✓</li>
+          <li>get_headers() ✓</li>
+          <li>is_authenticated() ✓</li>
+        </ul>
+        <p class="label" style="margin-top:0.5rem;">Commit: be378ab</p>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: #4caf50;">
+      <div class="card-body">
+        <h3 style="color:#4caf50;">✓ Task 3</h3>
+        <p><strong>Core Collector</strong></p>
+        <ul style="margin:0; padding-left:1.2rem;">
+          <li>GeektimeCollector 类 ✓</li>
+          <li>HTML 解析 ✓</li>
+          <li>内容提取 ✓</li>
+          <li>图片处理 ✓</li>
+        </ul>
+        <p class="label" style="margin-top:0.5rem;">Commit: 05a9c7c</p>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: #4caf50;">
+      <div class="card-body">
+        <h3 style="color:#4caf50;">✓ Task 4</h3>
+        <p><strong>SKILL.md Interface</strong></p>
+        <ul style="margin:0; padding-left:1.2rem;">
+          <li>SKILL.md ✓</li>
+          <li>README.md ✓</li>
+          <li>Claude Code 接口 ✓</li>
+        </ul>
+        <p class="label" style="margin-top:0.5rem;">Commit: 38f4460</p>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: #4caf50;">
+      <div class="card-body">
+        <h3 style="color:#4caf50;">✓ Task 5</h3>
+        <p><strong>Integration Test</strong></p>
+        <ul style="margin:0; padding-left:1.2rem;">
+          <li>端到端测试 ✓</li>
+          <li>无效 URL 处理 ✓</li>
+        </ul>
+        <p class="label" style="margin-top:0.5rem;">Commit: dfb7d5f</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>⏳ 待完成任务 (2/7)</h3>
+
+  <div class="cards">
+    <div class="card" style="border-color: #ff9800;">
+      <div class="card-body">
+        <h3 style="color:#ff9800;">⏳ Task 6</h3>
+        <p><strong>Dependency Fixes</strong></p>
+        <ul style="margin:0; padding-left:1.2rem;">
+          <li>添加 beautifulsoup4 到 requirements.txt</li>
+          <li>修复 models.py 导入</li>
+        </ul>
+        <p class="label" style="margin-top:0.5rem;">状态: 待开始</p>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: #ff9800;">
+      <div class="card-body">
+        <h3 style="color:#ff9800;">⏳ Task 7</h3>
+        <p><strong>Verification</strong></p>
+        <ul style="margin:0; padding-left:1.2rem;">
+          <li>运行全部测试</li>
+          <li>验证导入</li>
+          <li>真实 URL 测试（需要 Cookie）</li>
+        </ul>
+        <p class="label" style="margin-top:0.5rem;">状态: 待开始</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>📁 当前项目结构</h3>
+  <div class="mockup" style="font-family: monospace; font-size: 0.85rem; padding: 1rem;">
+    <div style="color:#666;">ai-media-system/</div>
+    <div style="padding-left:1rem;">├── requirements.txt</div>
+    <div style="padding-left:1rem;">├── .env.example</div>
+    <div style="padding-left:1rem;">├── config/collector_config.yaml</div>
+    <div style="padding-left:1rem;">└── skills/00-collector/geektime-collector/</div>
+    <div style="padding-left:2rem;">├── SKILL.md</div>
+    <div style="padding-left:2rem;">├── README.md</div>
+    <div style="padding-left:2rem;">├── auth.py</div>
+    <div style="padding-left:2rem;">├── collector.py</div>
+    <div style="padding-left:2rem;">├── models.py</div>
+    <div style="padding-left:2rem;">└── tests/</div>
+    <div style="padding-left:3rem;">├── test_models.py (7 tests) ✓</div>
+    <div style="padding-left:3rem;">├── test_auth.py (2 tests) ✓</div>
+    <div style="padding-left:3rem;">├── test_collector.py (4 tests) ✓</div>
+    <div style="padding-left:3rem;">└── integration/</div>
+    <div style="padding-left:4rem;">└── test_e2e.py (2 tests, 1 skip) ✓</div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>🧪 测试覆盖率</h3>
+  <div style="display:flex; align-items:center; gap:1rem; padding:1rem;">
+    <div style="flex:1;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+        <span>单元测试</span>
+        <span style="color:#4caf50;">13/13 通过</span>
+      </div>
+      <div style="background:#e0e0e0; height:8px; border-radius:4px;">
+        <div style="background:#4caf50; width:100%; height:8px; border-radius:4px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>📝 代码审查发现</h3>
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>✓ 优点</h4>
+      <ul>
+        <li>数据类设计清晰</li>
+        <li>TDD 流程规范</li>
+        <li>类型注解完整</li>
+        <li>测试覆盖良好</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>⚠️ 改进建议</h4>
+      <ul>
+        <li>异常处理过于宽泛</li>
+        <li>hash() 不稳定（建议用 hashlib）</li>
+        <li>collect_from_url 缺少测试</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>🎯 下一步行动</h3>
+  <p style="margin-bottom:1rem;">完成剩余任务后，Geektime Collector Skill 将就绪！</p>
+  <div class="options">
+    <div class="option" data-choice="continue" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>继续完成 Task 6-7</h3>
+        <p>完成依赖修复和验证步骤</p>
+      </div>
+    </div>
+    <div class="option" data-choice="demo" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>演示实际采集</h3>
+        <p>配置 Cookie 后采集真实文章</p>
+      </div>
+    </div>
+  </div>
+</div>
