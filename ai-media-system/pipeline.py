@@ -352,6 +352,8 @@ def main():
 
     parser = argparse.ArgumentParser(description="MVP 内容生产流水线")
     parser.add_argument("--url", help="要采集的文章URL")
+    parser.add_argument("--content", help="直接输入文章内容（跳过采集）")
+    parser.add_argument("--title", default="AI技术解析", help="文章标题（配合--content使用）")
     parser.add_argument("--theme", default="blue", help="排版主题")
     parser.add_argument("--output", help="输出HTML文件路径")
     parser.add_argument("--mock", action="store_true", help="使用模拟模式")
@@ -361,28 +363,85 @@ def main():
     # 创建流水线
     pipeline = MVPPipeline(mock_mode=args.mock)
 
-    # 运行
-    url = args.url or "https://example.com/test"  # 默认值用于测试
+    # 如果直接提供内容，跳过采集
+    if args.content:
+        print("🚀 启动 MVP 内容生产流水线（直接内容模式）")
+        print("=" * 50)
 
-    result = pipeline.run(url, theme=args.theme)
+        # 构造虚拟采集结果
+        collect_result = {
+            "success": True,
+            "content": {
+                "id": "manual_001",
+                "type": "manual",
+                "url": "",
+                "title": args.title,
+                "content": args.content,
+                "author": "手动输入"
+            }
+        }
+    else:
+        print("🚀 启动 MVP 内容生产流水线")
+        print("=" * 50)
 
-    if not result["success"]:
-        print(f"\n❌ 错误: {result['error']}")
+        # 运行
+        url = args.url or "https://example.com/test"  # 默认值用于测试
+        # 步骤1: 采集
+        print("\n📂 步骤1: 采集内容...")
+        collect_result = pipeline.step_collect(url)
+        if not collect_result["success"]:
+            print(f"   ❌ 采集失败: {collect_result.get('error')}")
+            print("\n💡 提示: 使用 --content 直接输入内容可跳过采集")
+            sys.exit(1)
+        print(f"   ✅ 采集完成: {collect_result['content']['title']}")
+
+
+    # 步骤2: 选题
+    print("\n💡 步骤2: 选题策划...")
+    curate_result = pipeline.step_curate([collect_result["content"]])
+    if not curate_result["success"]:
+        print(f"\n❌ 错误: {curate_result.get('error')}")
         sys.exit(1)
+    candidates = curate_result["candidates"]
+    selected = candidates[0] if candidates else None
+    if not selected:
+        print("   ❌ 无候选选题")
+        sys.exit(1)
+    print(f"   ✅ 策划完成: {selected['title']}")
+
+    # 步骤3: 创作
+    print("\n✍️  步骤3: 内容创作...")
+    write_result = pipeline.step_write(
+        selected,
+        collect_result["content"]["content"]
+    )
+    if not write_result["success"]:
+        print(f"\n❌ 错误: {write_result.get('error')}")
+        sys.exit(1)
+    print(f"   ✅ 创作完成: {write_result['article']['word_count']} 字")
+
+    # 步骤4: 排版
+    print("\n🎨 步骤4: 公众号排版...")
+    format_result = pipeline.step_format(write_result["article"], args.theme)
+    if not format_result["success"]:
+        print(f"\n❌ 错误: {format_result.get('error')}")
+        sys.exit(1)
+    print(f"   ✅ 排版完成")
+
+    print("\n" + "=" * 50)
+    print("✨ 流水线执行完成！")
 
     # 保存输出
     if args.output:
-        with open(args.output, "w", encoding="utf-8") as f:
-            f.write(result["html"])
-        print(f"\n📄 HTML已保存到: {args.output}")
+        output_file = args.output
     else:
-        # 默认输出
         output_file = "output.html"
-        with open(output_file, "w", encoding="utf-8") as f:
-            f.write(result["html"])
-        print(f"\n📄 HTML已保存到: {output_file}")
 
-    print("\n" + result.get("summary", ""))
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(format_result["html"])
+    print(f"\n📄 HTML已保存到: {output_file}")
+
+    print("\n" + curate_result.get("summary", ""))
 
 
 if __name__ == "__main__":

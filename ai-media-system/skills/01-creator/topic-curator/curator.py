@@ -116,7 +116,7 @@ class TopicCurator:
         return {
             "signals": value_signals,
             "total_score": total_score,
-            "is_worth_creating": total_score > 3
+            "is_worth_creating": total_score >= 2
         }
 
     def extract_key_points(self, content: str, max_points: int = 5) -> List[str]:

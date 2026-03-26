@@ -378,7 +378,7 @@ color: {self.theme['text']};
                 html=html,
                 metadata={
                     "headings": headings,
-                    "theme": list(self.THEMES.keys()).index(self.theme) if self.theme in self.THEMES.values() else 0,
+                    "theme": theme,
                     "char_count": len(content)
                 }
             )
