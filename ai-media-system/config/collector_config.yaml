@@ -1,0 +1,19 @@
+collector:
+  name: "geektime-collector"
+  version: "1.0.0"
+
+geektime:
+  base_url: "https://time.geekbang.org"
+  login_url: "https://account.geekbang.org/login"
+  timeout: 30000
+  retry: 3
+
+output:
+  format: "json"
+  include_images: true
+  include_video: true
+  video_transcript: true
+
+browser:
+  headless: true
+  user_agent: "${GEEKTIME_USER_AGENT}"
